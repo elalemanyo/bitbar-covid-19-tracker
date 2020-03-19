@@ -6,20 +6,26 @@
 //<bitbar.author.github>elalemanyo</bitbar.author.github>
 //<bitbar.desc>Track number of corona virus cases from your status bar</bitbar.desc>
 //<bitbar.dependencies>node</bitbar.dependencies>
-//<bitbar.image></bitbar.image>
+//<bitbar.image>https://raw.githubusercontent.com/elalemanyo/bitbar-covid-19-tracker/master/media/preview_3.png</bitbar.image>
 //<bitbar.abouturl>https://github.com/elalemanyo/bitbar-covid-19-tracker/README.md</bitbar.abouturl>
+
+const countries_ids = [
+    154, // china
+    16,  // italy
+    155, // iran
+    18,  // spain
+    11   // germany
+];
 
 const https = require('https');
 const baseUrl = 'https://coronavirus-tracker-api.herokuapp.com';
-const urls = [
-    '/v2/latest',
-    '/v2/locations/154',
-    '/v2/locations/16',
-    '/v2/locations/11',
-    '/v2/locations/18'
-];
-
+const urls = ['/v2/latest'];
 const icon = 'iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAAEhyb7BAAAAAXNSR0IArs4c6QAAAdlJREFUOBGFkzFLHFEQgFeFeBowalAJnB4kIFpIuN+QcEmRziJ10mhpGkGwtEkgfQqv8RdYCkqKgHiNZcQmVa46MCoREaIx3/d8b9nDjQ58O/PmzZudfTObZTfySNUDGp+gAkE2kqFu9PG4ho6xz+BcI4k7U/BARwOq8BnceAJdUiuullkYlY1E4yw59P6G1xCOPMZoQak8xGuKv+DJTfBAEDeVY3BzAUx9CXlGT1qNm6kI3+2BIBZhWh1/otbW/x5KZRhvs3QnOivoCzCTJQTpTUbUH9D9MAhfIQ/EzpZgDn7ARzCT3VGHVy9i7EWHzqfRfht1HZ2NxsU4ej3a81G/QwdZ4WmGL3AAY3AEv2AWgpzyNKhIm/XLsFt4GGjG57AKtwLw3Sl+2DZY+y6YzOE0cd587P+KV/cTirdzxbpYui03YQ1KZQiv978GHvwG3uIheFGTkBJaoT9ILrbfCtwwgU1MwQamVnzHnijseWdBHDDvIM1QqsBJMIHN3gf9HbBlW3HdQnvxbyCMipdooHcwAH5CqiYlcCimwb7ra8MJvIBc7IJDasAOVMGZ9BMcu1SB+w6Pf2ZXAtZBUhvtQkrooYSf4HhawQzcK7UY8QrdjHYdHe4grkvVP0xXjBIOIZS9AAAAAElFTkSuQmCC';
+
+let countries_idsLength = countries_ids.length;
+for (let i = 0; i < countries_idsLength; i++) {
+    urls.push('/v2/locations/' + countries_ids[i]);
+}
 
 let responses = {},
     completed_requests = 0,

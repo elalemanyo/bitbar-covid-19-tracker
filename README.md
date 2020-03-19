@@ -24,5 +24,10 @@ There are two ways to install BitBar on your Mac:
 - Download the [script](https://github.com/elalemanyo/bitbar-covid-19-tracker/blob/master/covid-tracker.1h.js) on your local machine. Make sure you place this file in the same plugin folder which you created while installing Bitbar.
 - Refresh Bitbar.
 
+### Add/Remove country
+You just need to add/remove country id inside the `countries_ids` object.
+
+To get the `id` from the country check [locations endpoint](https://coronavirus-tracker-api.herokuapp.com/v2/locations) from [coronavirus-tracker (API)](https://github.com/ExpDev07/coronavirus-tracker-api).
+
 ### Inspiration
 [Covid-19 India Tracker](https://github.com/thelittlewonder/covid-19indiatracker)
