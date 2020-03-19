@@ -68,14 +68,45 @@ function renderBitBarOutput(responses) {
 
 function renderCountriesSubmenus(responses) {
     let keys = Object.keys(responses),
-        country;
+        country,
+        timeline,
+        trend,
+        confirmed,
+        lastConfirmed,
+        diff,
+        diffColor;
 
     keys.shift();
     for (let key of keys) {
         country = responses[key].location;
-        printBitBarLine(country.country + ' (' + formatNumber(country.latest.confirmed) + ')');
+        timeline = country.timelines.confirmed.timeline,
+        confirmed = country.latest.confirmed,
+        lastConfirmed = timeline[Object.keys(timeline)[Object.keys(timeline).length - 2]],
+        diff = confirmed - lastConfirmed;
 
-        printBitBarLine('--Confirmed: ' + formatNumber(country.latest.confirmed), ['color=red']);
+
+        if (diff === 0) {
+            trend = '➡️';
+            diffColor = 'yellow';
+        }
+
+        else  {
+            switch (Math.sign(confirmed - lastConfirmed)) {
+                case 1:
+                    trend = '⬆️';
+                    diffColor = 'red';
+                    break;
+                case -1:
+                    trend = '⬇️';
+                    diffColor = '#61B329';
+                    break;
+            }
+        }
+
+        printBitBarLine(country.country + ' (' + formatNumber(confirmed) + ') ' + trend);
+
+        printBitBarLine('--Confirmed: ' + formatNumber(confirmed), ['color=red']);
+        printBitBarLine('--Δ ' + formatNumber((diff > 0) ? '+' + diff : diff), ['color=' + diffColor]);
         printBitBarLine('--Deaths: ' + formatNumber(country.latest.deaths), ['color=#000000']);
         printBitBarLine('--Recovered: ' + formatNumber(country.latest.recovered), ['color=#61B329']);
     }
